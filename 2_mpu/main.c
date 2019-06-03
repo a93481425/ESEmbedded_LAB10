@@ -38,7 +38,7 @@ int main(void)
 
 void user_task(void)
 {
-//	printf("[User] Try to print something.\r\n\n");
+	printf("[User] Try to print something.\r\n\n");
 	blink(LED_BLUE); //should not return
 }
 
@@ -67,8 +67,7 @@ void set_mpu(void)
 	//MPU_RBAR_VALUE(addr, region)
 	WRITE_BITS(MPU_BASE + MPU_RBAR_OFFSET, 31, 0 , MPU_RBAR_VALUE(RCC_BASE + RCC_AHB1ENR_OFFSET, 2) );
 	//MPU_RASR_VALUE(xn, ap, type, srd, size)
-	WRITE_BITS(MPU_BASE + MPU_RASR_OFFSET, 31, 0 , MPU_RASR_VALUE(MPU_XN_ENABLE , MPU_AP_FULL_ACCESS, MPU_TYPE_PERIPHERALS , 0 , MPU_REGION_SIZE_32B)  );
-
+	WRITE_BITS(MPU_BASE + MPU_RASR_OFFSET, 31, 0 , MPU_RASR_VALUE(MPU_XN_ENABLE , MPU_AP_FULL_ACCESS, MPU_TYPE_FLASH , 0 , MPU_REGION_SIZE_32B)  );
 
 	//set region 3: GPIOD, 32B, forbid execution, full access, enable all subregion
 	//??????
@@ -83,7 +82,7 @@ void set_mpu(void)
 	//disable region 4 ~ 7
 	for (int i=4 ; i<=7 ; i++)
 	{
-		//??????
+	//??????
 	//MPU_RBAR_VALUE(addr, region)
 	WRITE_BITS(MPU_BASE + MPU_RBAR_OFFSET, 31, 0 , MPU_RBAR_VALUE(0x00000000 , i) );
 	CLEAR_BIT(MPU_BASE + MPU_RASR_OFFSET , 0 );
