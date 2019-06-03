@@ -3,7 +3,7 @@
 .global	read_sp
 read_sp:
 	//??????
-	mrs 	r0,sp
+	mov 	r0,sp
 	bx 	lr
 	ISB
 
@@ -12,7 +12,7 @@ read_msp:
 	//??????
 	mrs 	r0,msp
 	bx 	lr
-	ISB
+//	ISB
 
 .global	read_psp
 read_psp:
@@ -29,14 +29,14 @@ read_ctrl:
 //	mrs	r0,ctrl
 	mrs	r0,control
 	bx	lr
-	ISB
+//	ISB
 
 
 .global	start_user
 start_user:
 	//??????
-	movs	lr,r0
-	msr	psp,r1
+	movs	lr,r0 //user_task
+	msr	psp,r1 //psp_init
 
 	movs	r3,#0b11
 	msr	control,r3
@@ -48,5 +48,8 @@ start_user:
 .global	sw_priv
 sw_priv:
 	//??????
-	movs	r3,#0b10
+	movs	r3,#0
 	msr	control,r3
+	isb
+	bx	lr
+
