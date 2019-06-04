@@ -46,36 +46,28 @@ void set_mpu(void)
 {
 	//set region 0: flash (0x00000000), 1MB, allow execution, full access, enable all subregion
 	//??????
-
-	//MPU_RBAR_VALUE(addr, region)
+	//MPU_RBAR_VALUE(addr, region) MPU_RASR_VALUE(xn, ap, type, srd, size)
 	WRITE_BITS(MPU_BASE + MPU_RBAR_OFFSET, 31, 0 , MPU_RBAR_VALUE(0x00000000, 0) );
-	//MPU_RASR_VALUE(xn, ap, type, srd, size)
 	WRITE_BITS(MPU_BASE + MPU_RASR_OFFSET, 31, 0 , MPU_RASR_VALUE(MPU_XN_DISABLE , MPU_AP_FULL_ACCESS, MPU_TYPE_FLASH , 0 , MPU_REGION_SIZE_1MB)  );
+
 
 	//set region 1: sram (0x20000000), 128KB, forbid execution, full access, enable all subregion
 	//??????
-
-	//MPU_RBAR_VALUE(addr, region)
+	//MPU_RBAR_VALUE(addr, region) MPU_RASR_VALUE(xn, ap, type, srd, size)
 	WRITE_BITS(MPU_BASE + MPU_RBAR_OFFSET, 31, 0 , MPU_RBAR_VALUE(0x20000000, 1) );
-	//MPU_RASR_VALUE(xn, ap, type, srd, size)
 	WRITE_BITS(MPU_BASE + MPU_RASR_OFFSET, 31, 0 , MPU_RASR_VALUE(MPU_XN_ENABLE , MPU_AP_FULL_ACCESS, MPU_TYPE_SRAM , 0 , MPU_REGION_SIZE_128KB)  );
 
 
 	//set region 2: RCC_AHB1ENR, 32B, forbid execution, full access, enable all subregion
 	//??????
-
-	//MPU_RBAR_VALUE(addr, region)
+	//MPU_RBAR_VALUE(addr, region)  MPU_RASR_VALUE(xn, ap, type, srd, size)
 	WRITE_BITS(MPU_BASE + MPU_RBAR_OFFSET, 31, 0 , MPU_RBAR_VALUE(RCC_BASE + RCC_AHB1ENR_OFFSET, 2) );
-	//MPU_RASR_VALUE(xn, ap, type, srd, size)
-	WRITE_BITS(MPU_BASE + MPU_RASR_OFFSET, 31, 0 , MPU_RASR_VALUE(MPU_XN_ENABLE , MPU_AP_FULL_ACCESS, MPU_TYPE_FLASH , 0 , MPU_REGION_SIZE_32B)  );
+	WRITE_BITS(MPU_BASE + MPU_RASR_OFFSET, 31, 0 , MPU_RASR_VALUE(MPU_XN_ENABLE , MPU_AP_FULL_ACCESS, MPU_TYPE_PERIPHERALS , 0 , MPU_REGION_SIZE_32B)  );
 
 	//set region 3: GPIOD, 32B, forbid execution, full access, enable all subregion
 	//??????
-
-
-	//MPU_RBAR_VALUE(addr, region)
+	//MPU_RBAR_VALUE(addr, region) MPU_RASR_VALUE(xn, ap, type, srd, size)
 	WRITE_BITS(MPU_BASE + MPU_RBAR_OFFSET, 31, 0 , MPU_RBAR_VALUE(GPIO_BASE(GPIO_PORTD) , 3) );
-	//MPU_RASR_VALUE(xn, ap, type, srd, size)
 	WRITE_BITS(MPU_BASE + MPU_RASR_OFFSET, 31, 0 , MPU_RASR_VALUE(MPU_XN_ENABLE , MPU_AP_FULL_ACCESS, MPU_TYPE_PERIPHERALS , 0 , MPU_REGION_SIZE_32B)  );
 
 
